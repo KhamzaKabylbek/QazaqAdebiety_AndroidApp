@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Ұлы Әдебиет</string>
+
+    <!-- Главное меню -->
+    <string name="main_title">Қазақ Әдебиеті</string>
+    <string name="main_subtitle">Ұлы дәстүр, мәңгі өмір</string>
+
+    <!-- Навигация -->
+    <string name="authors">Жазушылар</string>
+    <string name="works">Шығармалар</string>
+    <string name="quotes">Даналық сөздер</string>
+    <string name="about">Қолданба туралы</string>
+
+    <!-- Заголовки страниц -->
+    <string name="authors_title">Қазақ жазушылары</string>
+    <string name="works_title">Әдеби шығармалар</string>
+    <string name="quotes_title">Даналық сөздер</string>
+    <string name="about_title">Қолданба туралы</string>
+
+    <!-- Детали автора -->
+    <string name="biography">Өмірбаяны</string>
+    <string name="famous_works">Танымал шығармалары</string>
+    <string name="wise_words">Даналық сөздер</string>
+
+    <!-- Общие -->
+    <string name="classic">Классикалық</string>
+    <string name="genre">Жанр</string>
+    <string name="author">Автор</string>
+    <string name="year">Жыл</string>
+    <string name="years">жылдар</string>
+    <string name="present_day">қазіргі заман</string>
+</resources>
