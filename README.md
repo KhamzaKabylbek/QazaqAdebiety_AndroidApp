@@ -126,4 +126,4 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 ---
 
-**© 2024 - Ұлы Әдебиет қолданбасы** 
+**© 2025 - Ұлы Әдебиет қолданбасы** 
