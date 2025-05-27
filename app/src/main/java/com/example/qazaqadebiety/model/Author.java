@@ -1,8 +1,9 @@
 package com.example.qazaqadebiety.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Author {
+public class Author implements Serializable {
     private String name;
     private String nameKazakh;
     private String biography;

@@ -1,18 +1,16 @@
 package com.example.qazaqadebiety;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import com.example.qazaqadebiety.data.AuthorRepository;
 import com.example.qazaqadebiety.model.Author;
 
 public class AuthorDetailActivity extends AppCompatActivity {
-    private TextView nameTextView;
-    private TextView nameKazakhTextView;
-    private TextView yearsTextView;
-    private TextView biographyTextView;
-    private TextView worksTextView;
-    private TextView quotesTextView;
+    private TextView authorName, authorNameKazakh, authorYears, authorBiography, authorWorks, authorQuotes;
+    private Toolbar toolbar;
 
     private AuthorRepository repository;
 
@@ -22,24 +20,34 @@ public class AuthorDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_author_detail);
 
         initializeViews();
+        setupToolbar();
         loadAuthorData();
     }
 
     private void initializeViews() {
-        nameTextView = findViewById(R.id.text_author_name);
-        nameKazakhTextView = findViewById(R.id.text_author_name_kazakh);
-        yearsTextView = findViewById(R.id.text_author_years);
-        biographyTextView = findViewById(R.id.text_author_biography);
-        worksTextView = findViewById(R.id.text_author_works);
-        quotesTextView = findViewById(R.id.text_author_quotes);
+        toolbar = findViewById(R.id.toolbar);
+        authorName = findViewById(R.id.text_author_name);
+        authorNameKazakh = findViewById(R.id.text_author_name_kazakh);
+        authorYears = findViewById(R.id.text_author_years);
+        authorBiography = findViewById(R.id.text_author_biography);
+        authorWorks = findViewById(R.id.text_author_works);
+        authorQuotes = findViewById(R.id.text_author_quotes);
 
         repository = AuthorRepository.getInstance();
     }
 
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Жазушы туралы");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
     private void loadAuthorData() {
-        String authorName = getIntent().getStringExtra("author_name");
-        if (authorName != null) {
-            Author author = repository.getAuthorByName(authorName);
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("author")) {
+            Author author = (Author) intent.getSerializableExtra("author");
             if (author != null) {
                 displayAuthorInfo(author);
             }
@@ -47,35 +55,22 @@ public class AuthorDetailActivity extends AppCompatActivity {
     }
 
     private void displayAuthorInfo(Author author) {
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(author.getName());
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        authorName.setText(author.getName());
+        authorNameKazakh.setText(author.getNameKazakh());
+        authorYears.setText(author.getLifeYears());
+        authorBiography.setText(author.getBiography());
+        
+        StringBuilder worksText = new StringBuilder();
+        for (String work : author.getFamousWorks()) {
+            worksText.append("• ").append(work).append("\n");
         }
-
-        nameTextView.setText(author.getName());
-        nameKazakhTextView.setText(author.getNameKazakh());
-        yearsTextView.setText(author.getLifeYears());
-        biographyTextView.setText(author.getBiography());
-
-        // Отображение произведений
-        StringBuilder works = new StringBuilder();
-        for (int i = 0; i < author.getFamousWorks().size(); i++) {
-            works.append("• ").append(author.getFamousWorks().get(i));
-            if (i < author.getFamousWorks().size() - 1) {
-                works.append("\n");
-            }
+        authorWorks.setText(worksText.toString());
+        
+        StringBuilder quotesText = new StringBuilder();
+        for (String quote : author.getQuotes()) {
+            quotesText.append("\"").append(quote).append("\"\n\n");
         }
-        worksTextView.setText(works.toString());
-
-        // Отображение цитат
-        StringBuilder quotes = new StringBuilder();
-        for (int i = 0; i < author.getQuotes().size(); i++) {
-            quotes.append("\"").append(author.getQuotes().get(i)).append("\"");
-            if (i < author.getQuotes().size() - 1) {
-                quotes.append("\n\n");
-            }
-        }
-        quotesTextView.setText(quotes.toString());
+        authorQuotes.setText(quotesText.toString());
     }
 
     @Override

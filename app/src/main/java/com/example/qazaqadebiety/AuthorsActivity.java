@@ -2,6 +2,7 @@ package com.example.qazaqadebiety;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.qazaqadebiety.adapter.AuthorAdapter;
@@ -14,6 +15,7 @@ public class AuthorsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AuthorAdapter adapter;
     private AuthorRepository repository;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,19 +23,24 @@ public class AuthorsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_authors);
 
         initializeViews();
+        setupToolbar();
         loadAuthors();
     }
 
     private void initializeViews() {
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Қазақ жазушылары");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
+        toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.recycler_authors);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         
         repository = AuthorRepository.getInstance();
+    }
+
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Қазақ жазушылары");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void loadAuthors() {
